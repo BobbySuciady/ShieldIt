@@ -1,5 +1,5 @@
 
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, AddCategoryForm
 
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import User
@@ -26,4 +26,18 @@ def home(request):
 
 def user_detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)
-    return render(request, 'user_detail.html', {'user': user})
+    categories = user.categories.all()  # Assuming you have related_name='categories' on the ForeignKey in Category model
+    return render(request, 'user_detail.html', {'user': user, 'categories': categories})
+
+def add_category(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    if request.method == 'POST':
+        form = AddCategoryForm(request.POST)
+        if form.is_valid():
+            category = form.save(commit=False)  # Don't save immediately
+            category.user = user  # Assign the user to the category
+            category.save()  # Now save the category
+            return redirect('home')  # Redirect to home or a relevant page
+    else:
+        form = AddCategoryForm()
+    return render(request, 'add_category.html', {'form': form, 'user': user})
