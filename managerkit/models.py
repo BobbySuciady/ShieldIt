@@ -6,6 +6,7 @@ CHANGES TO THIS FILE? DO:
 """
 from django.db import models
 
+# models.py is to make databse tables
 # Make all null = False later
 class User(models.Model):
     name = models.CharField(max_length=100)

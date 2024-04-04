@@ -7,6 +7,7 @@ CHANGES TO THIS FILE? DO:
 from django import forms
 from .models import User, Item, Category
 
+# forms.py is to function to put things in the database
 
 class UserRegistrationForm(forms.ModelForm):
     class Meta:
@@ -18,4 +19,9 @@ class AddCategoryForm(forms.ModelForm):
         model = Category
         fields = ['name']
 
-        
+class AddItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = ['name', 'quantity', 'description']
+
+

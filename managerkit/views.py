@@ -1,8 +1,8 @@
 
-from .forms import UserRegistrationForm, AddCategoryForm
+from .forms import UserRegistrationForm, AddCategoryForm, AddItemForm
 
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import User
+from .models import User, Category
 
 def register_or_home(request):
     if User.objects.exists():
@@ -26,8 +26,9 @@ def home(request):
 
 def user_detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)
-    categories = user.categories.all()  # Assuming you have related_name='categories' on the ForeignKey in Category model
-    return render(request, 'user_detail.html', {'user': user, 'categories': categories})
+    categories = user.categories.all()
+    items = categories.all()
+    return render(request, 'user_detail.html', {'user': user, 'categories': categories, 'item': items})
 
 def add_category(request, user_id):
     user = get_object_or_404(User, pk=user_id)
@@ -37,7 +38,21 @@ def add_category(request, user_id):
             category = form.save(commit=False)  # Don't save immediately
             category.user = user  # Assign the user to the category
             category.save()  # Now save the category
-            return redirect('home')  # Redirect to home or a relevant page
+            return redirect('user_detail', user_id=user_id)  # Redirect to home or a relevant page
     else:
         form = AddCategoryForm()
     return render(request, 'add_category.html', {'form': form, 'user': user})
+
+def add_item(request, user_id, category_id):
+  category = get_object_or_404(Category, pk=category_id)
+  if request.method == 'POST':
+      form = AddItemForm(request.POST)
+      if form.is_valid():
+          item = form.save(commit=False)
+          item.category = category
+          item.save()
+          return redirect('user_detail', user_id=user_id)  # Adjust redirect as necessary
+  else:
+      form = AddItemForm()
+  return render(request, 'add_item.html', {'form': form, 'category': category})
+    
