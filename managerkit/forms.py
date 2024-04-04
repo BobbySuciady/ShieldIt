@@ -7,7 +7,6 @@ CHANGES TO THIS FILE? DO:
 from django import forms
 from .models import User, Item, Category
 
-
 class UserRegistrationForm(forms.ModelForm):
     class Meta:
         model = User
