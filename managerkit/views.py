@@ -24,10 +24,10 @@ def home(request):
     users = User.objects.all()
     return render(request, 'home.html', {'users': users})
 
-def user_detail(request, user_id):
+def kits_detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     categories = user.categories.all()  # Assuming you have related_name='categories' on the ForeignKey in Category model
-    return render(request, 'user_detail.html', {'user': user, 'categories': categories})
+    return render(request, 'kits_detail.html', {'user': user, 'categories': categories})
 
 def add_category(request, user_id):
     user = get_object_or_404(User, pk=user_id)
@@ -41,3 +41,28 @@ def add_category(request, user_id):
     else:
         form = AddCategoryForm()
     return render(request, 'add_category.html', {'form': form, 'user': user})
+
+def manage_users(request):
+    users = User.objects.all()
+    return render(request, 'manage_users.html', {'users': users})
+
+def user_detail(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    return render(request, 'user_detail.html', {'user': user})
+
+def delete_user(request, user_id):
+    if request.method == 'POST':
+        user = User.objects.get(id=user_id)
+        user.delete()
+    return redirect('manage_users')
+
+def update_user(request, user_id):
+    user = User.objects.get(pk=user_id)
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('manage_users')  # Redirect to user detail page
+    else:
+        form = UserRegistrationForm(instance=user)
+    return render(request, 'update_user.html', {'form': form, 'user': user})

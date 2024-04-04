@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kits Detail</title>
+</head>
+<body>
+    <h1>User's kit - {{ user.name }}</h1>
+    <h2>Items </h2>
+    <ul>
+      {% for category in categories %}
+          <li> {{ category.name }} </li>
+      {% empty %}
+          <li>No categories.</li>
+      {% endfor %}
+  </ul>
+
+    <a href="{% url 'add_category' user.id %}">Add category</a>
+</body>
+</html>
