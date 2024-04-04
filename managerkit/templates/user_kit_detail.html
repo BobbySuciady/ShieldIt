@@ -13,7 +13,7 @@
           <li> {{ category.name }} <a href="{% url 'add_item' user.id category.id %}">Add item</a>
             <ul>
               {% for item in category.items.all %}
-                  <li>{{ item.name }} - {{ item.description }}</li>
+                  <li>{{ item.name }} - {{item.expiry_date}} - {{ item.description }}</li>
                 {% empty %}
                   <li>No items in this category.</li>
               {% endfor %}

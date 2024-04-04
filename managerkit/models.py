@@ -10,9 +10,9 @@ from django.db import models
 # Make all null = False later
 class User(models.Model):
     name = models.CharField(max_length=100)
-    sex = models.CharField(max_length=10)
+    sex = models.CharField(max_length=10) # Should be enum type
     dietary_restrictions = models.CharField(max_length=100)
-    age = models.IntegerField()
+    age = models.IntegerField() # Restrict up to 100?
 
     def __str__(self):
         return self.name
@@ -24,8 +24,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
 class Item(models.Model):
     name = models.CharField(max_length=100)
+    expiry_date = models.DateField(null=True)
     quantity = models.IntegerField()
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='items')

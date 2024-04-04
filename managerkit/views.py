@@ -24,11 +24,11 @@ def home(request):
     users = User.objects.all()
     return render(request, 'home.html', {'users': users})
 
-def user_detail(request, user_id):
+def user_kit_detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     categories = user.categories.all()
     items = categories.all()
-    return render(request, 'user_detail.html', {'user': user, 'categories': categories, 'item': items})
+    return render(request, 'user_kit_detail.html', {'user': user, 'categories': categories, 'item': items})
 
 def add_category(request, user_id):
     user = get_object_or_404(User, pk=user_id)
@@ -38,7 +38,7 @@ def add_category(request, user_id):
             category = form.save(commit=False)  # Don't save immediately
             category.user = user  # Assign the user to the category
             category.save()  # Now save the category
-            return redirect('user_detail', user_id=user_id)  # Redirect to home or a relevant page
+            return redirect('user_kit_detail', user_id=user_id)  # Redirect to home or a relevant page
     else:
         form = AddCategoryForm()
     return render(request, 'add_category.html', {'form': form, 'user': user})
@@ -51,7 +51,7 @@ def add_item(request, user_id, category_id):
           item = form.save(commit=False)
           item.category = category
           item.save()
-          return redirect('user_detail', user_id=user_id)  # Adjust redirect as necessary
+          return redirect('user_kit_detail', user_id=user_id)  # Adjust redirect as necessary
   else:
       form = AddItemForm()
   return render(request, 'add_item.html', {'form': form, 'category': category})

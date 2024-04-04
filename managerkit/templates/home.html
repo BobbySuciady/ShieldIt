@@ -11,7 +11,7 @@
     <h1>List of Kits</h1>
     <ul>
         {% for user in users %}
-            <li> <a href="{% url 'user_detail' user.id %}">{{ user.name }} - {{ user.sex }} - {{ user.age }} - {{ user.dietary_restrictions }}</li>
+            <li> <a href="{% url 'user_kit_detail' user.id %}">{{ user.name }} - {{ user.sex }} - {{ user.age }} - {{ user.dietary_restrictions }}</li>
         {% empty %}
             <li>No users registered yet.</li>
         {% endfor %}
