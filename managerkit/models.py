@@ -1,4 +1,8 @@
-# user_management/models.py
+"""
+CHANGES TO THIS FILE? DO:
+- python manage.py makemigrations
+- python manage.py migrate
+"""
 from django.db import models
 
 class User(models.Model):
@@ -9,3 +13,4 @@ class User(models.Model):
 
     def __str__(self):
         return self.name
+

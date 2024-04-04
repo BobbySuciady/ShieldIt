@@ -1,4 +1,9 @@
-# user_management/forms.py
+"""
+CHANGES TO THIS FILE? DO:
+- python manage.py makemigrations
+- python manage.py migrate
+"""
+
 from django import forms
 from .models import User
 
