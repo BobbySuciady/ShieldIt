@@ -1,0 +1,22 @@
+<!-- user_management/templates/user_management/home.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Family Members</title>
+</head>
+<body>
+    <h1>Registered Family Members</h1>
+    <ul>
+        {% for user in users %}
+            <li> <a href="{% url 'user_detail' user.id %}">{{ user.name }} - {{ user.sex }} - {{ user.age }} - 
+                {{ user.dietary_restrictions }} - {{ user.medical_conditions }} - {{ user.disability }}</li>
+        {% empty %}
+            <li>No users registered yet.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'register' %}"><button type="button">Add Family Member</button></a>
+</body>
+</html>

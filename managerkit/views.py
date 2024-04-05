@@ -24,11 +24,13 @@ def home(request):
     users = User.objects.all()
     return render(request, 'home.html', {'users': users})
 
-def user_kit_detail(request, user_id):
+
+# Item
+def kits_detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     categories = user.categories.all()
     items = categories.all()
-    return render(request, 'user_kit_detail.html', {'user': user, 'categories': categories, 'item': items})
+    return render(request, 'kits_detail.html', {'user': user, 'categories': categories, 'item': items})
 
 def add_category(request, user_id):
     user = get_object_or_404(User, pk=user_id)
@@ -38,7 +40,7 @@ def add_category(request, user_id):
             category = form.save(commit=False)  # Don't save immediately
             category.user = user  # Assign the user to the category
             category.save()  # Now save the category
-            return redirect('user_kit_detail', user_id=user_id)  # Redirect to home or a relevant page
+            return redirect('kits_detail', user_id=user_id)  # Redirect to home or a relevant page
     else:
         form = AddCategoryForm()
     return render(request, 'add_category.html', {'form': form, 'user': user})
@@ -51,8 +53,35 @@ def add_item(request, user_id, category_id):
           item = form.save(commit=False)
           item.category = category
           item.save()
-          return redirect('user_kit_detail', user_id=user_id)  # Adjust redirect as necessary
+          return redirect('kits_detail', user_id=user_id)  # Adjust redirect as necessary
   else:
       form = AddItemForm()
   return render(request, 'add_item.html', {'form': form, 'category': category})
     
+
+
+# User management functions below
+def manage_users(request):
+    users = User.objects.all()
+    return render(request, 'manage_users.html', {'users': users})
+
+def user_detail(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    return render(request, 'user_detail.html', {'user': user})
+
+def delete_user(request, user_id):
+    if request.method == 'POST':
+        user = User.objects.get(id=user_id)
+        user.delete()
+    return redirect('manage_users')
+
+def update_user(request, user_id):
+    user = User.objects.get(pk=user_id)
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('manage_users')  # Redirect to user detail page
+    else:
+        form = UserRegistrationForm(instance=user)
+    return render(request, 'update_user.html', {'form': form, 'user': user})

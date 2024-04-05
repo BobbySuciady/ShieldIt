@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kits Detail</title>
+</head>
+<body>
+    <h1>User's personal kit - {{ user.name }}</h1>
+    <h2>Items </h2>
+    <ul>
+      {% for category in categories %}
+      <li> {{ category.name }} <a href="{% url 'add_item' user.id category.id %}">Add item</a>
+        <ul>
+          {% for item in category.items.all %}
+              <li>{{ item.name }} - {{item.expiry_date}} - {{ item.description }}</li>
+            {% empty %}
+              <li>No items in this category.</li>
+          {% endfor %}
+        </ul>
+      </li>
+      {% empty %}
+          <li>No categories.</li>
+      {% endfor %}
+  </ul>
+
+    <a href="{% url 'add_category' user.id %}">Add category</a>
+    <a href="{% url 'home' %}">Back to home</a>
+</body>
+</html>
