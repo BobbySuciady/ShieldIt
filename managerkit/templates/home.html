@@ -1,28 +1,134 @@
-<!-- user_management/templates/user_management/home.html -->
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
+    <style>
+        body {
+            background-color: #4F9F91;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            position: relative; /* Make body a positioned container for absolute positioning */
+            padding-bottom: 50px; /* Ensure content doesn't get hidden under the fixed footer */
+        }
+
+        a {
+            color: #516B4B;
+            text-decoration: none;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #FEFDED;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            overflow: hidden;
+            border-radius: 10px;
+            padding: 16px 33px;
+            box-shadow: 0 4px 4px 0 var(--transparent-black);
+            align-items: center;
+        }
+
+        .user-card {
+            flex-basis: calc(50% - 10px); /* Two cards per row with space between */
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #FEFDED;
+            border-radius: 5px;
+            box-sizing: border-box; /* Ensure padding doesn't increase the width */
+            overflow: hidden;
+            border-radius: 10px;
+            padding: 16px 33px;
+            box-shadow: 0 4px 4px 0 var(--transparent-black);
+            align-items: center;
+            text-align: center; /* Center the name */
+        }
+
+        .footer {
+            text-align: center;
+            position: fixed; /* Fixed positioning */
+            bottom: 0; /* Stick to the bottom */
+            left: 0;
+            width: 100%;
+            background-color: #FEFDED;
+            padding: 10px 0;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .footer a {
+            text-decoration: none;
+            color: #green;
+
+            padding: 10px 20px;
+            gap: 5px;
+            border-radius: 5px;
+        }
+
+        /* Media query for mobile screens */
+        @media only screen and (max-width: 600px) {
+            .user-card {
+                flex-basis: calc(50% - 10px); /* Two cards per row with space between */
+            }
+        }
+
+        /* Center the logo */
+        img.logo {
+            display: block; /* Ensure the image is displayed as a block element */
+            margin: 0 auto; /* Center horizontally */
+            margin-top:30px;
+        }
+
+        /* Style the profile picture */
+        img.pfp {
+            border-radius: 50%; /* Make it round */
+            width: 98px; /* Set width, maintain aspect ratio */
+            height: 98px; /* Let the height adjust automatically */
+            margin-bottom: 10px; /* Add some spacing */
+        }
+
+        /* Center the name */
+        .user-card p {
+            margin: 0; /* Remove default margin */
+        }
+    </style>
 </head>
 <body>
-    <h1>List of Everyone Kits</h1>
+    <!-- Insert the logo with class 'logo' -->
+    <img class="logo" src="{% static 'Logo.png' %}" alt="Logo">
+
+    <h1>ShieldIt</h1>
     <ul>
         {% for user in users %}
-            <li> <a href="{% url 'kits_detail' user.id %}">{{ user.name }} - {{ user.sex }} - {{ user.age }} - {{ user.dietary_restrictions }}</li>
+            <li class="user-card">
+                <a href="{% url 'kits_detail' user.id %}">
+                    <img class="pfp" src="{% static 'Pfp.jpg' %}" alt="Pfp">
+                    <p>{{ user.name }}'s Kit</p>
+                </a>
+            </li>
         {% empty %}
             <li>No users registered yet.</li>
         {% endfor %}
     </ul>
 
-    <!-- <a href="{% url 'register' %}">Add New User</a> -->
-    <hr>
-    <a href="{% url 'home' %}">List of Everone Kits</a>
-    <a href="{% url 'manage_users' %}">List of Members</a>
-    <a href="{% url 'notifications' %}">Notifications</a>
-    <a href="{% url 'settings' %}">Settings</a>
+    <!-- Footer with buttons -->
+    <div class="footer">
+        <a href="{% url 'home' %}">List of Everyone Kits</a>
+        <a href="{% url 'manage_users' %}">List of Members</a>
+        <a href="{% url 'notifications' %}">Notifications</a>
+        <a href="{% url 'settings' %}">Settings</a>
+    </div>
 
 </body>
 </html>
