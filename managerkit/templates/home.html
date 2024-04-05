@@ -116,7 +116,7 @@
         {% for user in users %}
             <li class="user-card">
                 <a href="{% url 'kits_detail' user.id %}">
-                    <img class="pfp" src="{% static 'Pfp.jpg' %}" alt="Pfp">
+                    <img class="pfp" src="{% static 'profile.png' %}" alt="Pfp">
                     <p>{{ user.name }}'s Kit</p>
                 </a>
             </li>

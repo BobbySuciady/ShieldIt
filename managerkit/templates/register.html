@@ -1,20 +1,118 @@
-<!-- user_management/templates/user_management/register.html -->
-<!-- user_management/templates/user_management/register.html -->
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Family Member Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #4F9F91;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #FEFDED;
+        }
+
+        img.pfp {
+            display: block;
+            margin: 0 auto;
+            border-radius: 50%;
+            width: 98px;
+            height: 98px;
+            margin-bottom: 10px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: #FEFDED;
+            color: #333;
+        }
+
+        /* Style labels to match input fields */
+        label {
+            color: #FEFDED; /* Set label color to match input fields */
+            display: block; /* Ensure labels are displayed as blocks */
+            margin-bottom: 8px; /* Add some spacing between labels and inputs */
+        }
+
+        .button-container {
+            text-align: center;
+            justify-content: center;
+        }
+
+        button[type="submit"] {
+            background-color: #FEFDED;
+            color: #4F9F91;
+            padding: 20px 70px; /* Adjust padding for bigger buttons */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+            width: auto; /* Ensure buttons expand to fit content */
+            display: inline-block; /* Display buttons side by side */
+            margin-bottom: 20px;
+            font-size:15px;
+
+        }
+        button[type="button"] {
+            background-color: #4F9F91;
+            color: white;
+            padding: 20px 70px; /* Adjust padding for bigger buttons */
+            border: 1px solid #FEFDED;
+            border-radius: 2px;
+            cursor: pointer;
+            margin-right: 10px;
+            width: auto; /* Ensure buttons expand to fit content */
+            display: inline-block; /* Display buttons side by side */
+            margin-bottom: 20px;
+            font-size:15px;
+            border-radius: 4px;
+        }
+
+        button[type="submit"]:hover,
+        button[type="button"]:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Family Member Registration</h1>
+    <h1>Add New Member</h1>
+    <img class="pfp" src="{% static 'profile.png' %}" alt="Pfp">
+    <h2>Edit Profile</h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Register</button>
-        <a href="{% url 'manage_users' %}"><button type="button">Cancel</button></a>
+        <div class="button-container">
+            <a href="{% url 'manage_users' %}"><button type="button">Cancel</button></a>
+            <button type="submit">Save</button>
+        </div>
     </form>
 </body>
 </html>
