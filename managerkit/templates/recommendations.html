@@ -4,16 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recommendations</title>
+    <style>
+        /* Add CSS style to make text bold */
+        .bold-text {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <h1>Recommendations</h1>
-    <ul>
+    <div>
         {% for recommendation in recommendations %}
-            <li>{{ recommendation }} </li>
+            {% if ":" in recommendation %}
+                <span class="bold-text">{{ recommendation }}</span>
+                <br>
+            {% elif recommendation == "" %}
+                <br>
+            {% else %}
+                <input type="checkbox" id="recommendation_{{ forloop.counter }}" name="recommendation_{{ forloop.counter }}" value="{{ recommendation }}">
+                <label for="recommendation_{{ forloop.counter }}">{{ recommendation }}</label>
+                <br>
+            {% endif %}
         {% empty %}
-            <li>No recommendations</li>
+            <span>No recommendations</span>
         {% endfor %}
-    </ul>
+    </div>
+    <br>
+    <a href="{% url 'kits_detail' user.id %}"><button type="button">Back</button></a>
 
 </body>
 </html>

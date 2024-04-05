@@ -22,5 +22,4 @@ urlpatterns = [
     path('delete_user/<int:user_id>/', views.delete_user, name='delete_user'), # Usage of URL to run function
     path('update_user/<int:user_id>/', views.update_user, name='update_user'), # Usage of URL to run function
     path('user/<int:user_id>/recommendations/', views.recommendations, name='recommendations'),
-
 ]

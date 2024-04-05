@@ -44,8 +44,10 @@
 </head>
 <body>
     <h1>User's personal kit - {{ user.name }}</h1>
-    <h2>Items </h2>
+
     <a href="{% url 'recommendations' user.id %}">Recommended Kit</a>
+
+    <h2>Items </h2>
     <ul>
       {% for category in categories %}
       <li> {{ category.name }} <button onclick="openModal('addItemModal')">Add Item</button> 
