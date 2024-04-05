@@ -66,3 +66,8 @@ def update_user(request, user_id):
     else:
         form = UserRegistrationForm(instance=user)
     return render(request, 'update_user.html', {'form': form, 'user': user})
+
+def setting(request):
+    return render(request, 'setting.html')
+def notifications(request):
+    return render(request, 'notifications.html')

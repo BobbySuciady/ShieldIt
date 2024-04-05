@@ -8,7 +8,10 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('user/<int:user_id>/', views.kits_detail, name='kits_detail'),
     path('user/<int:user_id>/add_category/', views.add_category, name='add_category'),
+    path('user/<int:user_id>/', views.user_detail, name='user_detail'),
     path('manage_users/', views.manage_users, name='manage_users'),
     path('delete_user/<int:user_id>/', views.delete_user, name='delete_user'),
     path('update_user/<int:user_id>/', views.update_user, name='update_user'),
+    path('setting/', views.setting, name='setting'),
+    path('notifications/', views.notifications, name='notifications'),
 ]
