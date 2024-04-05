@@ -4,6 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kits Detail</title>
+
+    <style>
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      }
+      
+      .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+      }
+      
+      .close-button {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      
+      .close-button:hover,
+      .close-button:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    </style>
 </head>
 <body>
     <h1>User's personal kit - {{ user.name }}</h1>
@@ -11,7 +48,26 @@
     <a href="{% url 'recommendations' user.id %}">Recommended Kit</a>
     <ul>
       {% for category in categories %}
-      <li> {{ category.name }} <a href="{% url 'add_item' user.id category.id %}">Add item</a>
+      <li> {{ category.name }} <button onclick="openModal('addItemModal')">Add Item</button> 
+        <!-- Delete category Button here-->
+        <form method="post" action="{% url 'delete_category' user.id category.id %}">
+          {% csrf_token %}
+          <input type="hidden" name="user_id" value="{{ user.id }}">
+          <input type="submit" value="Delete">
+        </form>
+        <!-- Add Item Button -->
+        <div id="addItemModal" class="modal">
+          <div class="modal-content">
+            <span class="close-button" onclick="closeModal('addItemModal')">&times;</span>
+            <h2>Add Item for {{ category.name }} category</h2>
+            <form method="post" id="addItemForm">
+              {% csrf_token %}
+              {{ add_item_form.as_p }}
+              <input type="hidden" name="category" value="{{ category.id }}">
+              <button type="submit" name="add_item_form">Add Item</button>
+            </form>
+          </div>
+        </div>
         <ul>
           {% for item in category.items.all %}
               <li>{{ item.name }} - {{item.expiry_date}} - {{ item.description }}</li>
@@ -25,7 +81,47 @@
       {% endfor %}
   </ul>
 
-    <a href="{% url 'add_category' user.id %}">Add category</a>
-    <a href="{% url 'home' %}">Back</a>
+<button onclick="openModal('addCategoryModal')">Add Category</button>
+  <!-- Add Category Modal -->
+<div id="addCategoryModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" onclick="closeModal('addCategoryModal')">&times;</span>
+    <h2>Add Category for {{ user.name }}</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ add_category_form.as_p }}
+      <button type="submit" name="add_category_form">Add Category</button>
+    </form>
+  </div>
+</div>
+
+
+
+
+<!-- You will need to pass the category ID when opening the add item modal -->
+
+
+
+  <a href="{% url 'home' %}">Back</a>
+
+  <script>
+    // Function to open a modal
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = "block";
+    }
+    
+    // Function to close a modal
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = "none";
+    }
+    
+    // Example usage: Dynamically setting the action for the Add Item form
+    // This is a basic approach and might need to be adapted based on your specific case
+    function setAddItemAction(categoryId) {
+      var formAction = "/user/" + categoryId + "/add_item/"; // Construct the URL manually
+      document.getElementById('AddItemForm').action = formAction;
+      openModal('addItemModal');
+    }
+    </script>      
 </body>
 </html>

@@ -3,5 +3,5 @@
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Save</button>
-    <a href="{% url 'home' %}"><button type="button">Back</button></a>
+    <a href="{% url 'kits_detail' user.id %}"><button type="button">Back</button></a>
 </form>

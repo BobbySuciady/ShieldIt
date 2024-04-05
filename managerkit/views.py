@@ -34,10 +34,32 @@ def home(request):
 
 # Item
 def kits_detail(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
-    categories = user.categories.all()
-    items = categories.all()
-    return render(request, 'kits_detail.html', {'user': user, 'categories': categories, 'item': items})
+  user = get_object_or_404(User, pk=user_id)
+  categories = user.categories.all()
+  if request.method == 'POST':
+    if "add_item_form" in request.POST:
+      add_item_form = AddItemForm(request.POST)
+      add_category_form = AddCategoryForm()
+      if add_item_form.is_valid():
+          item = add_item_form.save(commit=False)
+          category_id = request.POST.get('category')
+          # Use the category ID to get the Category object
+          item.category = get_object_or_404(Category, id=category_id)
+          item.save()
+          return redirect('kits_detail', user_id=user_id)  # Adjust redirect as necessary
+    elif "add_category_form" in request.POST:
+      add_category_form = AddCategoryForm(request.POST)
+      add_item_form = AddItemForm()
+      if add_category_form.is_valid():
+          category = add_category_form.save(commit=False)  # Don't save immediately
+          category.user = user  # Assign the user to the category
+          category.save()  # Now save the category
+          return redirect('kits_detail', user_id=user_id)  # Redirect to home or a relevant page
+  else:
+    add_item_form = AddItemForm()
+    add_category_form = AddCategoryForm()
+  items = categories.all()
+  return render(request, 'kits_detail.html', {'add_item_form':add_item_form, 'add_category_form':add_category_form, 'user': user, 'categories': categories, 'item': items})
 
 def add_category(request, user_id):
     user = get_object_or_404(User, pk=user_id)
@@ -52,7 +74,14 @@ def add_category(request, user_id):
         form = AddCategoryForm()
     return render(request, 'add_category.html', {'form': form, 'user': user})
 
+def delete_category(request, user_id, category_id):
+    if request.method == 'POST':
+      category = Category.objects.get(id=category_id)
+      category.delete()
+    return redirect('kits_detail', user_id=user_id)
+
 def add_item(request, user_id, category_id):
+  user = get_object_or_404(User, pk=user_id)
   category = get_object_or_404(Category, pk=category_id)
   if request.method == 'POST':
       form = AddItemForm(request.POST)
@@ -63,8 +92,10 @@ def add_item(request, user_id, category_id):
           return redirect('kits_detail', user_id=user_id)  # Adjust redirect as necessary
   else:
       form = AddItemForm()
-  return render(request, 'add_item.html', {'form': form, 'category': category})
+  return render(request, 'add_item.html', {'add_item_form': form, 'category': category, 'user':user})
     
+def delete_item(request, user_id, category_id):
+    return None
 
 
 # User management functions below
@@ -79,6 +110,7 @@ def user_detail(request, user_id):
 def edit_user_detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     return render(request, 'edit_user_detail.html', {'user': user})
+
 
 def delete_user(request, user_id):
     if request.method == 'POST':
