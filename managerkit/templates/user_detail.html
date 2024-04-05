@@ -17,5 +17,6 @@
     <p>Medical Conditions: {{ user.medical_conditions }}</p>
     <p>Disability: {{ user.disability }}</p>
     <a href="{% url 'edit_user_detail' user_id=user.id %}"><button type="button">Edit</button></a>
+    <a href="{% url 'manage_users' %}"><button type="button">Back</button></a>
 </body>
 </html>
