@@ -70,7 +70,7 @@ class Item(models.Model):
     name = models.CharField(max_length=100)
     expiry_date = models.DateField(null=True)
     quantity = models.IntegerField()
-    description = models.TextField()
+    description = models.TextField(blank=True) # Blank != Null
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='items')
 
     def __str__(self):
