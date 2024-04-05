@@ -40,6 +40,11 @@
         text-decoration: none;
         cursor: pointer;
       }
+
+      .inline-heading {
+      display: inline-block;
+      }
+
     </style>
 </head>
 <body>
@@ -51,28 +56,49 @@
     <ul>
       {% for category in categories %}
       <li> {{ category.name }} <button onclick="openModal('addItemModal')">Add Item</button> 
-        <!-- Delete category Button here-->
-        <form method="post" action="{% url 'delete_category' user.id category.id %}">
-          {% csrf_token %}
-          <input type="hidden" name="user_id" value="{{ user.id }}">
-          <input type="submit" value="Delete">
-        </form>
-        <!-- Add Item Button -->
-        <div id="addItemModal" class="modal">
-          <div class="modal-content">
-            <span class="close-button" onclick="closeModal('addItemModal')">&times;</span>
-            <h2>Add Item for {{ category.name }} category</h2>
-            <form method="post" id="addItemForm">
-              {% csrf_token %}
-              {{ add_item_form.as_p }}
-              <input type="hidden" name="category" value="{{ category.id }}">
-              <button type="submit" name="add_item_form">Add Item</button>
-            </form>
-          </div>
+      <!-- Delete category Button here-->
+      <form method="post" action="{% url 'delete_category' user.id category.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ user.id }}">
+        <input type="submit" value="Delete">
+      </form>
+      <!-- Add Item Button -->
+      <div id="addItemModal" class="modal">
+        <div class="modal-content">
+          <span class="close-button" onclick="closeModal('addItemModal')">&times;</span>
+          <h2>Add Item for {{ category.name }} category</h2>
+          <form method="post" id="addItemForm">
+            {% csrf_token %}
+            {{ add_item_form.as_p }}
+            <input type="hidden" name="category" value="{{ category.id }}">
+            <button type="submit" name="add_item_form">Add Item</button>
+          </form>
         </div>
+      </div>
         <ul>
           {% for item in category.items.all %}
-              <li>{{ item.name }} - {{item.expiry_date}} - {{ item.description }}</li>
+              <li><button onclick="openModal('openItemModal')">{{ item.name }} - {{item.expiry_date}}<button onclick="openModal('addCategoryModal')"></button></li>
+              <!-- View Item Button -->
+              <div id="openItemModal" class="modal">
+                <div class="modal-content">
+                  <h2><strong>{{ item.name }}</strong></h2> <span class="close-button" onclick="closeModal('openItemModal')">&times;</span>
+                  <div class="line"><h3 class="inline-heading">Expiry Date</h3> <h3 class="inline-heading">Quantity</h3></div>
+                  <div class="line"><h3 class="inline-heading">{{item.expiry_date}}</h3> <h3 class="inline-heading">{{item.quantity}}</h3></div>
+                  <h3>Notes</h3>
+                  <p>{{item.description}}</p>
+                  <form method="post" id="openItemModal">
+                    {% csrf_token %}
+                    <input type="hidden" name="category" value="{{ category.id }}">
+                    <button type="submit" name="add_item_form">Edit</button>
+                  </form>
+                  <!-- Delete Item Button here-->
+                  <form method="post" action="{% url 'delete_item' user.id category.id item.id%}">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    <input type="submit" value="Delete">
+                  </form>
+                </div>
+              </div>
             {% empty %}
               <li>No items in this category.</li>
           {% endfor %}

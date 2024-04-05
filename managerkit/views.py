@@ -2,7 +2,7 @@
 from .forms import UserRegistrationForm, AddCategoryForm, AddItemForm
 
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import User, Category
+from .models import User, Category, Item
 
 def register_or_home(request):
     if User.objects.exists():
@@ -94,9 +94,12 @@ def add_item(request, user_id, category_id):
       form = AddItemForm()
   return render(request, 'add_item.html', {'add_item_form': form, 'category': category, 'user':user})
     
-def delete_item(request, user_id, category_id):
-    return None
-
+def delete_item(request, user_id, category_id, item_id):
+  if request.method == 'POST':
+    #category = Category.objects.get(id=category_id)
+    item = Item.objects.get(id=item_id)
+    item.delete()
+  return redirect('kits_detail', user_id=user_id)
 
 # User management functions below
 def manage_users(request):
