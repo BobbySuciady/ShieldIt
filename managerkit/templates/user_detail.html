@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Member's Detail</title>
+</head>
+<body>
+    <h1>Family Member's Detail - {{ user.name }}</h1>
+
+    <form method="post" action="{% url 'update_user' user.id %}">
+        {% csrf_token %}
+        <p>Name: <input type="text" name="name" value="{{ user.name }}"></p>
+        <p>Sex:
+            <select name="sex">
+                {% for key, value in user.SEX_CHOICES %}
+                <option value="{{ key }}" {% if user.sex == key %}selected{% endif %}>{{ value }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>Age: <input type="number" name="age" value="{{ user.age }}"></p>
+        <p>Dietary Restrictions: 
+            <select name="dietary_restrictions">
+                {% for key, value in user.DIETARY_RESTRICTION_CHOICES %}
+                <option value="{{ key }}" {% if user.dietary_restrictions == key %}selected{% endif %}>{{ value }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>Medical Condition: 
+            <select name="medical_conditions">
+                {% for key, value in user.MEDICAL_CONDITIONS_CHOICES %}
+                <option value="{{ key }}" {% if user.medical_conditions == key %}selected{% endif %}>{{ value }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>Disability:
+            <select name="disability">
+                {% for key, value in user.DISABILITY_CHOICES %}
+                <option value="{{ key }}" {% if user.disability == key %}selected{% endif %}>{{ value }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        
+        <input type="submit" value="Update">
+        
+    </form>
+    <form method="post" action="{% url 'delete_user' user.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ user.id }}">
+        <input type="submit" value="Delete">
+        <a href="{% url 'manage_users' %}"><button type="button">Cancel</button></a>
+    </form>
+</body>
+</html>

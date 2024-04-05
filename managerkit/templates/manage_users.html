@@ -18,6 +18,10 @@
         {% endfor %}
     </ul>
     <a href="{% url 'register' %}"><button type="button">Add Family Member</button></a>
-    <a href="{% url 'manage_users' %}"><button type="button">Cancel</button></a>
+    <hr>
+    <a href="{% url 'home' %}">List of Everone Kits</a>
+    <a href="{% url 'manage_users' %}">List of Members</a>
+    <a href="{% url 'notifications' %}">Notifications</a>
+    <a href="{% url 'settings' %}">Settings</a>
 </body>
 </html>
