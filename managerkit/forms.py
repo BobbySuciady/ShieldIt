@@ -7,8 +7,6 @@ CHANGES TO THIS FILE? DO:
 from django import forms
 from .models import User, Item, Category
 
-# forms.py is to function to put things in the database
-
 class UserRegistrationForm(forms.ModelForm):
     class Meta:
         model = User
