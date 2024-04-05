@@ -24,6 +24,25 @@ class User(models.Model):
         (OTHER, 'Other'),
     ]
 
+    RELATIONSHIP_CHOICES = [
+        ('Father', 'Father'),
+        ('Mother', 'Mother'),
+        ('Husband', 'Husband'),
+        ('Wife', 'Wife'),
+        ('Son', 'Son'),
+        ('Daughter', 'Daughter'),
+        ('Brother', 'Brother'),
+        ('Sister', 'Sister'),
+        ('Cousin (male)', 'Cousin (male)'),
+        ('Cousin (female)', 'Cousin (female)'),
+        ('Nephew', 'Nephew'),
+        ('Niece', 'Niece'),
+        ('Grandfather', 'Grandfather'),
+        ('Grandmother', 'Grandmother'),
+        ('Grandson', 'Grandson'),
+        ('Granddaughter', 'Granddaugher'),
+        ('Other', 'Other'),
+    ]
     DIETARY_RESTRICTION_CHOICES = [
         ('No Dietary Restrictions', 'No Restrictions'),
         ('FODMAP', 'FODMAP'),
@@ -49,8 +68,10 @@ class User(models.Model):
         ('Non-disable', 'Non-disable'),
     ]
     name = models.CharField(max_length=100, null=False, blank=False)
+    email = models.EmailField(max_length=254, null=False, blank=False)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES, null=False, blank=False)
     age = models.PositiveIntegerField(validators=[MaxValueValidator(99, message=_("Age must be below 100"))], null=False, blank=False)
+    relationship = models.TextField(choices=RELATIONSHIP_CHOICES, null=False, blank=False)
     dietary_restrictions = models.TextField(choices=DIETARY_RESTRICTION_CHOICES, null=False, blank=False)
     medical_conditions = models.TextField(choices=MEDICAL_CONDITIONS_CHOICES, null=False, blank=False)
     disability = models.TextField(choices=DISABILITY_CHOICES, null=False, blank=False)
