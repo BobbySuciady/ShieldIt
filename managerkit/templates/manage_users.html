@@ -1,27 +1,139 @@
 <!-- user_management/templates/user_management/home.html -->
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registered Family Members</title>
+    <style>
+        body {
+            background-color: #4F9F91;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            padding-bottom: 50px;
+        }
+
+        a {
+            color: #516B4B;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #FEFDED;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            overflow: hidden;
+            border-radius: 10px;
+            padding: 16px 33px;
+            box-shadow: 0 4px 4px 0 var(--transparent-black);
+            align-items: center;
+        }
+
+        ul li {
+            flex-basis: calc(50% - 10px);
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #FEFDED;
+            border-radius: 5px;
+            box-sizing: border-box;
+            overflow: hidden;
+            border-radius: 10px;
+            padding: 16px 33px;
+            box-shadow: 0 4px 4px 0 var(--transparent-black);
+            align-items: center;
+            text-align: center;
+            height: 200px; /* Fixed height for user cards */
+        }
+
+        ul li:last-child {
+            background-color: #4F9F91; /* Green background for the "+" card */
+            border: 2px solid #FEFDED; /* White border */
+            font-size: 100px; /* Make the "+" symbol bigger */
+            border-radius: 5px; /* Border radius */
+            cursor: pointer; /* Change cursor to pointer on hover */
+            display: flex; /* Use flexbox for centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+        }
+
+        .footer {
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #FEFDED;
+            padding: 10px 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+
+        .footer a {
+            text-decoration: none;
+            color: #green;
+            padding: 10px;
+            gap: 5px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        img.logo {
+            display: block;
+            margin: 0 auto;
+            margin-top:30px;
+        }
+
+        img.pfp {
+            border-radius: 50%;
+            width: 98px;
+            height: 98px;
+            margin-bottom: 10px;
+        }
+
+        .user-card p {
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
-    <h1>Registered Family Members</h1>
+    <h1>Manage Users</h1>
     <ul>
         {% for user in users %}
-            <li> <a href="{% url 'user_detail' user.id %}">{{ user.name }} - {{ user.sex }} - {{ user.age }} - {{ user.relationship }} -
-                {{ user.dietary_restrictions }} - {{ user.medical_conditions }} - {{ user.disability }}</li>
+            <li class="user-card">
+                <img class="pfp" src="{% static 'Pfp.jpg' %}" alt="Pfp">
+                <a href="{% url 'user_detail' user.id %}">{{ user.name }}</a>
+            </li>
         {% empty %}
             <li>No users registered yet.</li>
         {% endfor %}
+        <li style="color: #FEFDED;"><a href="{% url 'register' %}" style="color: #FFF;">+</a></li>
+
     </ul>
-    <a href="{% url 'register' %}"><button type="button">Add Family Member</button></a>
-    <hr>
-    <a href="{% url 'home' %}">List of Everone Kits</a>
-    <a href="{% url 'manage_users' %}">List of Members</a>
-    <a href="{% url 'notifications' %}">Notifications</a>
-    <a href="{% url 'settings' %}">Settings</a>
+
+
+    <div class="footer">
+        <a href="{% url 'home' %}"><img src="{% static 'home.png' %}" style="width: 50px; height: 50px;">Home</a>
+        <a href="{% url 'manage_users' %}"><img src="{% static 'manage_filled.png' %}" style="width: 50px; height: 50px;">Members</a>
+        <a href="{% url 'notifications' %}"><img src="{% static 'notification.png' %}" style="width: 50px; height: 50px;">Alerts</a>
+        <a href="{% url 'settings' %}"><img src="{% static 'settings.png' %}" style="width: 50px; height: 50px;">Settings</a>
+    </div>
 </body>
 </html>
