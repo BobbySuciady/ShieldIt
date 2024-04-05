@@ -8,6 +8,7 @@
 <body>
     <h1>User's personal kit - {{ user.name }}</h1>
     <h2>Items </h2>
+    <a href="{% url 'recommendations' user.id %}">Recommended Kit</a>
     <ul>
       {% for category in categories %}
       <li> {{ category.name }} <a href="{% url 'add_item' user.id category.id %}">Add item</a>

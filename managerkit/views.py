@@ -10,15 +10,22 @@ def register_or_home(request):
     else:
         return redirect('register')
 
+
 def register_user(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('manage_users')
+            user = form.save(commit=False)
+            dietary_restrictions = form.cleaned_data.get('dietary_restrictions', '')
+            user.dietary_restrictions = dietary_restrictions
+
+            user.save()
+
+            return redirect('home')
     else:
         form = UserRegistrationForm()
     return render(request, 'register.html', {'form': form})
+
 
 def home(request):
     users = User.objects.all()
@@ -94,3 +101,24 @@ def setting(request):
     return render(request, 'settings.html')
 def notifications(request):
     return render(request, 'notifications.html')
+
+
+from django.shortcuts import render
+from .models import User
+
+
+def recommendations(request, user_id):
+    user = User.objects.get(pk=user_id)
+
+
+    dietary_restrictions = user.dietary_restrictions
+
+    recommendations = []
+
+    if dietary_restrictions == 'No Restrictions':
+        recommendations.append("You can enjoy a wide variety of food options!")
+    elif dietary_restrictions == 'FODMAP':
+        recommendations.append("Here are some low FODMAP recipes you might like.. Stuff")
+    elif dietary_restrictions == 'Gluten Free':
+        recommendations = "Check out these delicious gluten-free recipes..."
+    return render(request, 'recommendations.html', {'recommendations': recommendations})
