@@ -19,7 +19,7 @@ class AddCategoryForm(forms.ModelForm):
 
 class AddItemForm(forms.ModelForm):
     # How to make this accept null values?
-    expiry_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    expiry_date = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = Item
