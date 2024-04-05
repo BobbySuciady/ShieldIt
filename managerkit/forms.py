@@ -10,7 +10,7 @@ from .models import User, Item, Category
 class UserRegistrationForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['name', 'sex', 'age', 'dietary_restrictions', 'medical_conditions', 'disability']
+        fields = ['name', 'email', 'sex', 'age','relationship', 'dietary_restrictions', 'medical_conditions', 'disability']
 
 class AddCategoryForm(forms.ModelForm):
     class Meta:

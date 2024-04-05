@@ -15,7 +15,7 @@ def register_user(request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('manage_users')
     else:
         form = UserRegistrationForm()
     return render(request, 'register.html', {'form': form})
@@ -68,6 +68,10 @@ def manage_users(request):
 def user_detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     return render(request, 'user_detail.html', {'user': user})
+
+def edit_user_detail(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    return render(request, 'edit_user_detail.html', {'user': user})
 
 def delete_user(request, user_id):
     if request.method == 'POST':
