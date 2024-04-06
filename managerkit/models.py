@@ -25,6 +25,7 @@ class User(models.Model):
     ]
 
     RELATIONSHIP_CHOICES = [
+        ('Primary User', 'Primary User'),
         ('Father', 'Father'),
         ('Mother', 'Mother'),
         ('Husband', 'Husband'),
