@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,34 +7,125 @@
     <title>Kits Detail</title>
 
     <style>
+      /* General Styles */
+      body {
+        background-color: #4F9F91;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 10px;
+      }
+
+      h1, h2, h3 {
+        margin: 0;
+        padding: 0;
+        color: #FEFDED;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+        color: #FEFDED;
+      }
+
+      /* Modal Styles */
       .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
+        display: none;
+        position: fixed;
+        z-index: 1;
         left: 0;
         top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
       }
-      
+
+      .header {
+        text-align: center; /* Center align the header */
+      }
+
+      .button {
+        background-color: #FF6F61; /* Button background color */
+        color: white; /* Button text color */
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px; /* Padding inside the button */
+        font-size: 12px; /* Button text size */
+        cursor: pointer;
+        transition: background-color 0.3s; /* Smooth transition for background color */
+      }
+
+      .addcategorybutton {
+        background-color:#4F9F91; /* Button background color */
+        color: white; /* Button text color */
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px; /* Padding inside the button */
+        font-size: 30px; /* Button text size */
+        cursor: pointer;
+        transition: background-color 0.3s; /* Smooth transition for background color */
+        margin: 0 auto; /* Center the button horizontally */
+        display: block; /* Make it a block element */
+      }
+
+      .recommendationbutton {
+        background-color:#FEFDED; /* Button background color */
+        color: white; /* Button text color */
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px; /* Padding inside the button */
+        font-size: 15px; /* Button text size */
+        cursor: pointer;
+        color: black;
+        transition: background-color 0.3s; /* Smooth transition for background color */
+        margin: 0 auto; /* Center the button horizontally */
+        display: block; /* Make it a block element */
+        width:30%;
+      }
+
+      button:hover {
+        background-color: #E4572E; /* Darker background color on hover */
+      }
+
+      /* Styling for the back button */
+      .back-button {
+        background-color: #4F9F91; /* Back button background color */
+        color: white; /* Back button text color */
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px; /* Padding inside the button */
+        font-size: 16px; /* Back button text size */
+        cursor: pointer;
+        text-decoration: none; /* Remove default underline */
+        transition: background-color 0.3s; /* Smooth transition for background color */
+        position: fixed;
+        top: 10px;
+        left: 10px;
+      }
+
+      .back-button:hover {
+        background-color: #336B63; /* Darker background color on hover */
+      }
+
+      li button {
+        margin-left: 10px; /* Add some space between category name and buttons */
+      }
+
       .modal-content {
         background-color: #fefefe;
-        margin: 15% auto; /* 15% from the top and centered */
+        margin: 15% auto;
         padding: 20px;
         border: 1px solid #888;
-        width: 80%; /* Could be more or less, depending on screen size */
+        width: 80%;
       }
-      
+
       .close-button {
         color: #aaa;
         float: right;
         font-size: 28px;
         font-weight: bold;
       }
-      
+
       .close-button:hover,
       .close-button:focus {
         color: black;
@@ -41,29 +133,84 @@
         cursor: pointer;
       }
 
-      .inline-heading {
-      display: inline-block;
+      /* Cards Styles */
+      .card {
+        background-color: #FEFDED;
+        color: black;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        display: inline-block;
+        width: calc(33.33% - 20px);
+        margin-right: 20px;
+        box-sizing: border-box;
       }
+
+      .card:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Mobile Styles */
+      @media screen and (max-width: 600px) {
+        .card {
+          width: 50%;
+          margin-right: 0;
+        }
+      }
+
+      /* Inline Heading Styles */
+      .inline-heading {
+        display: inline-block;
+        color: black;
+      }
+
+      /* Flexbox for Items */
+      .items-list {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      img.pfp {
+            border-radius: 50%; /* Make it round */
+            width: 98px; /* Set width, maintain aspect ratio */
+            height: 98px; /* Let the height adjust automatically */
+            margin-bottom: 10px; /* Add some spacing */
+        }
+
+       .category-header {
+        display: flex;
+        flex-direction: row;
+       }
+
+       .formH2 {
+        color: black;
+       }
 
     </style>
 </head>
 <body>
-    <h1>User's personal kit - {{ user.name }}</h1>
+    <div class="header">
+      <img class="pfp" src="{% static 'profile.png' %}" alt="Pfp">
+      <h2>{{ user.name }}'s Kit</h2>
+      <a href="{% url 'recommendations' user.id %}" class="recommendationbutton">Recommended Kit</a>
+    </div>
 
-    <a href="{% url 'recommendations' user.id %}">Recommended Items</a>
 
-    <h2>Items </h2>
+
     <ul>
       {% for category in categories %}
-      <li> {{ category.name }} <button onclick="openModal('addItemModal')">Add Item</button> 
+      <li>
+        <div class="category-header">
+        {{ category.name }} <button onclick="openModal('addItemModal{{ category.id }}')" class="button">Add Item</button>
       <!-- Delete category Button here-->
       <form method="post" action="{% url 'delete_category' user.id category.id %}">
         {% csrf_token %}
         <input type="hidden" name="user_id" value="{{ user.id }}">
-        <input type="submit" value="Delete">
+        <input type="submit" value="Delete" class="button">
       </form>
+          </div>
       <!-- Add Item Button -->
-      <div id="addItemModal" class="modal">
+      <div id="addItemModal{{ category.id }}" class="modal">
         <div class="modal-content">
           <span class="close-button" onclick="closeModal('addItemModal')">&times;</span>
           <h2>Add Item for {{ category.name }} category</h2>
@@ -71,79 +218,86 @@
             {% csrf_token %}
             {{ add_item_form.as_p }}
             <input type="hidden" name="category" value="{{ category.id }}">
-            <button type="submit" name="add_item_form">Add Item</button>
+            <button type="submit" name="add_item_form" class="button">Add Item</button>
           </form>
         </div>
       </div>
-        <ul>
-          {% for item in category.items.all %}
-              <li><button onclick="openModal('openItemModal')">{{ item.name }} - {{item.expiry_date}}<button onclick="openModal('addCategoryModal')"></button></li>
-              <!-- View Item Button -->
-              <div id="openItemModal" class="modal">
-                <div class="modal-content">
-                  <h2><strong>{{ item.name }}</strong></h2> <span class="close-button" onclick="closeModal('openItemModal')">&times;</span>
-                  <div class="line"><h3 class="inline-heading">Expiry Date</h3> <h3 class="inline-heading">Quantity</h3></div>
-                  <div class="line"><h3 class="inline-heading">{{item.expiry_date}}</h3> <h3 class="inline-heading">{{item.quantity}}</h3></div>
-                  <h3>Notes</h3>
-                  <p>{{item.description}}</p>
-                  <!-- Edit Item Button here (Not implemented)-->
-                  <form method="post" id="openItemModal">
-                    {% csrf_token %}
-                    <input type="hidden" name="category" value="{{ category.id }}">
-                    <button type="submit" name="add_item_form">Edit</button>
-                  </form>
-                  <!-- Delete Item Button here-->
-                  <form method="post" action="{% url 'delete_item' user.id category.id item.id%}">
-                    {% csrf_token %}
-                    <input type="hidden" name="user_id" value="{{ user.id }}">
-                    <input type="submit" value="Delete">
-                  </form>
-                </div>
-              </div>
-            {% empty %}
-              <li>No items in this category.</li>
-          {% endfor %}
-        </ul>
+        <ul class="items-list">
+  {% for item in category.items.all %}
+    <li class="card">
+      <div class="item">
+        <div onclick="openModal('openItemModal{{ item.id }}')">
+          {{ item.name }} - {{ item.expiry_date }}
+        </div>
+        <!-- View Item Modal -->
+        <div id="openItemModal{{ item.id }}" class="modal">
+          <div class="modal-content">
+            <h2 class="formH2"><strong>{{ item.name }}</strong></h2>
+            <span class="close-button" onclick="closeModal('openItemModal{{ item.id }}')">&times;</span>
+            <div class="line">
+              <h3 class="inline-heading">Expiry Date</h3>
+              <h3 class="inline-heading">Quantity</h3>
+            </div>
+            <div class="line">
+              <h3 class="inline-heading">{{ item.expiry_date }}</h3>
+              <h3 class="inline-heading">{{ item.quantity }}</h3>
+            </div>
+            <h3 class="inline-heading">Notes</h3>
+            <p class="inline-heading">{{ item.description }}</p>
+            <form method="post">
+              {% csrf_token %}
+              <input type="hidden" name="category" value="{{ category.id }}">
+              <button type="submit" name="edit_item_form" class="button">Edit</button>
+            </form>
+            <!-- Delete Item Button -->
+            <form method="post" action="{% url 'delete_item' user.id category.id item.id %}">
+              {% csrf_token %}
+              <input type="hidden" name="user_id" value="{{ user.id }}">
+              <input type="submit" value="Delete" class="button">
+            </form>
+          </div>
+        </div>
+      </div>
+    </li>
+  {% empty %}
+    <li>No items in this category.</li>
+  {% endfor %}
+</ul>
+
       </li>
       {% empty %}
           <li>No categories.</li>
       {% endfor %}
   </ul>
 
-<button onclick="openModal('addCategoryModal')">Add Category</button>
+<button onclick="openModal('addCategoryModal')" class="addcategorybutton"> + Add Category</button>
   <!-- Add Category Modal -->
 <div id="addCategoryModal" class="modal">
   <div class="modal-content">
     <span class="close-button" onclick="closeModal('addCategoryModal')">&times;</span>
-    <h2>Add Category for {{ user.name }}</h2>
+    <h2 class="formH2">Add Category for {{ user.name }}</h2>
     <form method="post">
       {% csrf_token %}
       {{ add_category_form.as_p }}
-      <button type="submit" name="add_category_form">Add Category</button>
+      <button type="submit" name="add_category_form" class="addcategorybutton"> + Add Category</button>
     </form>
   </div>
 </div>
 
-
-
-
 <!-- You will need to pass the category ID when opening the add item modal -->
 
-
-
-  <a href="{% url 'home' %}">Back</a>
-
+  <a href="{% url 'home' %}" class="back-button"><</a>
   <script>
     // Function to open a modal
     function openModal(modalId) {
       document.getElementById(modalId).style.display = "block";
     }
-    
+
     // Function to close a modal
     function closeModal(modalId) {
       document.getElementById(modalId).style.display = "none";
     }
-    
+
     // Example usage: Dynamically setting the action for the Add Item form
     // This is a basic approach and might need to be adapted based on your specific case
     function setAddItemAction(categoryId) {
@@ -151,6 +305,6 @@
       document.getElementById('AddItemForm').action = formAction;
       openModal('addItemModal');
     }
-    </script>      
+  </script>
 </body>
 </html>
