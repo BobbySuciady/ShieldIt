@@ -1,8 +1,8 @@
-# ShieldKit: Your Ultimate Disaster Preparedness Companion App 🛡️
-
 <p align="center">
   <img src="https://github.com/BobbySuciady/ShieldIt/blob/main/logo.jpg" alt="ShieldKit Logo">
 </p>
+
+# ShieldKit: Your Ultimate Disaster Preparedness Companion App 🛡️
 
 ShieldKit is your family's guardian angel in times of crisis, offering comprehensive disaster preparedness solutions.
 
@@ -28,7 +28,7 @@ Disasters and emergencies can strike unexpectedly, leaving families vulnerable a
 
 - **Smart Recommendations**: Access personalized checklists and suggestions when adding new members to your family profile, ensuring nothing is overlooked.
 
-## How We Do It 🚀
+## How To Run the App 🚀
 
 Setting up ShieldIt on your local machine is a breeze! Follow these steps:
 
