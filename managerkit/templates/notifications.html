@@ -3,15 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>notifications</title>
+    <title>Notifications</title>
+    <style>
+        body {
+            background-color: #4F9F91;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            position: relative; /* Make body a positioned container for absolute positioning */
+            padding-bottom: 50px; /* Ensure content doesn't get hidden under the fixed footer */
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #FEFDED;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            overflow: hidden;
+            border-radius: 10px;
+            padding: 16px 33px;
+            box-shadow: 0 4px 4px 0 var(--transparent-black);
+            align-items: center;
+        }
+
+        li {
+            flex-basis: calc(50% - 10px); /* Two items per row with space between */
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #FEFDED;
+            border-radius: 5px;
+            box-sizing: border-box; /* Ensure padding doesn't increase the width */
+            overflow: hidden;
+            border-radius: 10px;
+            padding: 16px 33px;
+            box-shadow: 0 4px 4px 0 var(--transparent-black);
+            align-items: center;
+            text-align: center; /* Center the content */
+        }
+
+        /* Media query for mobile screens */
+        @media only screen and (max-width: 600px) {
+            li {
+                flex-basis: calc(50% - 10px); /* Two items per row with space between */
+            }
+        }
+        .back-button {
+        background-color: #4F9F91; /* Back button background color */
+        color: white; /* Back button text color */
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px; /* Padding inside the button */
+        font-size: 16px; /* Back button text size */
+        cursor: pointer;
+        text-decoration: none; /* Remove default underline */
+        transition: background-color 0.3s; /* Smooth transition for background color */
+        position: fixed;
+        top: 10px;
+        left: 10px;
+      }
+    </style>
 </head>
 <body>
-    <h1>Notifications</h1>
-
-    <hr>
-    <a href="{% url 'home' %}">List of Everone Kits</a>
-    <a href="{% url 'manage_users' %}">List of Members</a>
-    <a href="{% url 'notifications' %}">Notifications</a>
-    <a href="{% url 'settings' %}">Settings</a>
+    <h1>Expiring Items</h1>
+    <ul>
+        {% for expiring_item in expiring_items %}
+            <li>{{ expiring_item.name }} - Expiry Date: {{ expiring_item.expiry_date }}</li>
+        {% empty %}
+            <li>No expiring items found.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'home' %}" class="back-button"><</a>
 </body>
 </html>

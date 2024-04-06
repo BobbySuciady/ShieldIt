@@ -97,3 +97,9 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+
+# In your models.py or a separate models file
+class ExpiringItem(models.Model):
+    name = models.CharField(max_length=100)
+    expiry_date = models.DateField()
+

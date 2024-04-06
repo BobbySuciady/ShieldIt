@@ -262,3 +262,11 @@ def recommendations(request, user_id):
     
     return render(request, 'recommendations.html', {'recommendations': recommendations, 'user': user})
 
+
+# In your views.py
+from django.shortcuts import render
+from .models import ExpiringItem
+
+def notifications(request):
+    expiring_items = ExpiringItem.objects.all()
+    return render(request, 'notifications.html', {'expiring_items': expiring_items})
