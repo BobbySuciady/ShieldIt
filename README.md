@@ -29,9 +29,17 @@ Evacuation Planning: Create customizable evacuation plans for your family.
 Interactive Maps: See real-time safe zones and danger areas during emergencies.
 
 How to run the app:
+add tutorial here
 
-Technology used:
+Technology used in the project:
+HTML/CSS/JS
+Django python framework
+Celery Tasker & redis server
+
+Tools used in the project:
+Figma (for design)
+Cofluence (for requirement gathering and project management)
 
 Disclaimer:
 
-This project assumes access to a smartphone with a  tech-savvy individual  in the household.  Our initial features are based on limited user research and may evolve as we gather more data.
+This project assumes access to a smartphone with a  tech-aware individual  in the household.  Our initial features are based on limited user research and may evolve as we gather more data.
