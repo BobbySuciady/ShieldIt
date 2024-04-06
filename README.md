@@ -20,7 +20,9 @@ c) Family Focused: Register family members to simplify organization and communic
 
 d) Adaptable: Add new item categories specific to each family member's needs.
 
-e) Stay Alert: Receive timely warnings and reminders about item conditions and approaching disasters.Smart Recommendations: Get personalized checklists and suggestions when you add new members to your family profile.
+e) Stay Alert: Receive timely warnings and reminders about item conditions and approaching disasters.
+
+f) Smart Recommendations: Get personalized checklists and suggestions when you add new members to your family profile.
 
 How We Do It:
 
