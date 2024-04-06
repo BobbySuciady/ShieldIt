@@ -13,23 +13,26 @@
 </head>
 <body>
     <h1>Recommendations</h1>
-    <div>
+    <ul>
         {% for recommendation in recommendations %}
-            {% if ":" in recommendation %}
+            {% if "=>" in recommendation %}
+                <!-- If recommendation contains ":", make it bold -->
                 <span class="bold-text">{{ recommendation }}</span>
                 <br>
             {% elif recommendation == "" %}
+                <!-- If recommendation is empty, print a line break -->
                 <br>
             {% else %}
-                <input type="checkbox" id="recommendation_{{ forloop.counter }}" name="recommendation_{{ forloop.counter }}" value="{{ recommendation }}">
-                <label for="recommendation_{{ forloop.counter }}">{{ recommendation }}</label>
-                <br>
+                <!-- Otherwise, render the recommendation as a link -->
+                <li>{{ recommendation|safe }}</li>
             {% endif %}
         {% empty %}
+            <!-- If there are no recommendations, display a message -->
             <span>No recommendations</span>
         {% endfor %}
-    </div>
+    </ul>
     <br>
+    <!-- Add a button to navigate back -->
     <a href="{% url 'kits_detail' user.id %}"><button type="button">Back</button></a>
 
 </body>
