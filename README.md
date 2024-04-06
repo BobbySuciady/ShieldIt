@@ -12,33 +12,31 @@ Natural disasters and emergencies can strike at any time. We believe everyone de
 
 What We Offer:
 
-Organize with Ease: Create a customized survival kit for each member of your household, considering their unique needs (children, elders, disabilities).
-Peace of Mind: Track expiry dates and receive reminders to ensure your kit is always up-to-date.
-Family Focused: Register family members to simplify organization and communication, especially for those less tech-savvy.
-Adaptable: Add new item categories specific to each family member's needs.
-Stay Alert: Receive timely warnings and reminders about item conditions and approaching disasters.
-Smart Recommendations: Get personalized checklists and suggestions when you add new members to your family profile.
+a) Organize with Ease: Create a customized survival kit for each member of your household, considering their unique needs (children, elders, disabilities).
+
+b) Peace of Mind: Track expiry dates and receive reminders to ensure your kit is always up-to-date.
+
+c) Family Focused: Register family members to simplify organization and communication, especially for those less tech-savvy.
+
+d) Adaptable: Add new item categories specific to each family member's needs.
+
+e) Stay Alert: Receive timely warnings and reminders about item conditions and approaching disasters.Smart Recommendations: Get personalized checklists and suggestions when you add new members to your family profile.
+
+How We Do It:
+
+How to run the app:
 
 What's Next:
 
 We're constantly striving to improve ShieldKit!  Our future development plans include:
 
-Educational Resources: Access valuable articles and tutorials on disaster preparedness.
-Marketplace Integration: Easily purchase missing items directly within the app.
-Evacuation Planning: Create customizable evacuation plans for your family.
-Interactive Maps: See real-time safe zones and danger areas during emergencies.
+a) Educational Resources: Access valuable articles and tutorials on disaster preparedness.
 
-How to run the app:
-add tutorial here
+b) Marketplace Integration: Easily purchase recommended or missing items directly within the app.
 
-Technology used in the project:
-HTML/CSS/JS
-Django python framework
-Celery Tasker & redis server
+c) Evacuation Planning: Create customizable evacuation plans for your family.
 
-Tools used in the project:
-Figma (for design)
-Cofluence (for requirement gathering and project management)
+d) Interactive Maps: See real-time safe zones and danger areas during emergencies.
 
 Disclaimer:
 
