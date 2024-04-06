@@ -50,7 +50,7 @@
 <body>
     <h1>User's personal kit - {{ user.name }}</h1>
 
-    <a href="{% url 'recommendations' user.id %}">Recommended Kit</a>
+    <a href="{% url 'recommendations' user.id %}">Recommended Items</a>
 
     <h2>Items </h2>
     <ul>
@@ -86,6 +86,7 @@
                   <div class="line"><h3 class="inline-heading">{{item.expiry_date}}</h3> <h3 class="inline-heading">{{item.quantity}}</h3></div>
                   <h3>Notes</h3>
                   <p>{{item.description}}</p>
+                  <!-- Edit Item Button here (Not implemented)-->
                   <form method="post" id="openItemModal">
                     {% csrf_token %}
                     <input type="hidden" name="category" value="{{ category.id }}">

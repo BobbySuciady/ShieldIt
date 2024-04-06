@@ -10,7 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+from __future__ import absolute_import, unicode_literals
+from .celery import app as celery_app
 from pathlib import Path
+from datetime import timedelta
+
+__all__ = ('celery_app',)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -122,3 +127,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# celery broker url tasker (need Redis running on localhost)
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+
+CELERY_BEAT_SCHEDULE = {
+    'check-expiry-dates-every-5-minutes': {
+        'task': 'managerkit.tasks.check_expiry_dates',
+        'schedule': timedelta(seconds=10),
+    },
+}
+
