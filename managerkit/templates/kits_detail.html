@@ -185,6 +185,10 @@
        .formH2 {
         color: black;
        }
+       label {
+        color: black; /* Set label color to black */
+       }
+
 
     </style>
 </head>
@@ -212,8 +216,8 @@
       <!-- Add Item Button -->
       <div id="addItemModal{{ category.id }}" class="modal">
         <div class="modal-content">
-          <span class="close-button" onclick="closeModal('addItemModal')">&times;</span>
-          <h2>Add Item for {{ category.name }} category</h2>
+          <span class="close-button" onclick="closeModal('addItemModal{{ category.id }}')">&times;</span>
+          <h2 class="formH2">Add Item for {{ category.name }} category</h2>
           <form method="post" id="addItemForm">
             {% csrf_token %}
             {{ add_item_form.as_p }}
